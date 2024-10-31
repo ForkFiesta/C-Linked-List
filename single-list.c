@@ -52,7 +52,7 @@ void insert_at_position(node **list, int idx, int value){
     }
     new_node->data = value;
     if(*list == NULL){
-        printf("cannot add item at index %d. List is empty\n");
+        printf("cannot add item at index %d. List is empty\n", idx);
         free(new_node);
         return;
     }
@@ -67,7 +67,7 @@ void insert_at_position(node **list, int idx, int value){
     for(;counter<idx-1 && p!=NULL; counter++, p=p->next);
 
     if(p == NULL){
-        printf("Index %d out of range for list size\n");
+        printf("Index %d out of range for list size\n", idx);
         free(new_node);
         return;
     }
@@ -112,11 +112,10 @@ int delete_from_end(node **list){
     while(p->next->next != NULL){
         p = p->next;
     }
+    int return_value = p->next->data;
     free(p->next);
     p->next = NULL;
-
-    
-    
+    return return_value;
 
 
 }
@@ -159,11 +158,11 @@ int search(node *list, int value){
         return -1;
     }
     int index = 0;
-    for(;list!=NULL;list = list=list->next){
-        index++;
+    for(;list!=NULL;list=list->next){
         if(list->data == value){
             return index;
         }
+        index++;
     }
     return -1;
 
@@ -172,7 +171,7 @@ int search(node *list, int value){
 int print(node *list){
     if(list == NULL){
         printf("Cannot print from an empty list\n");
-        return;
+        return -1;
     }
     int index = 0;
     for (;list!=NULL;list=list->next){
@@ -180,7 +179,7 @@ int print(node *list){
         index++;
     }
 
-    return index;
+    return index-1;
 }
 
 
@@ -209,13 +208,15 @@ void run_all_tests(){
     test_delete_from_position();
     test_search();
     test_print();
-    printf("\033[1:32mAll tests passed successfully.\033[0m\n");
+    printf("\033[1;32mAll tests passed successfully.\033[0m\n");
 }
 void test_initialize_head(){
+    printf("\033[0;33mTesting Initialize Head...\033[0m\n");
     node *head = initialize_head();
     assert(head == NULL);
 }
 void test_insert_at_beginning(){
+    printf("\033[0;33mTesting Insert at Beginning...\033[0m\n");
     node *head = initialize_head();
     insert_at_beginning(&head, 3);
     insert_at_beginning(&head, 2);
@@ -225,6 +226,7 @@ void test_insert_at_beginning(){
     assert(head == NULL);
 }
 void test_insert_at_end(){
+    printf("\033[0;33mTesting Insert at End...\033[0m\n");
     node *head = initialize_head();
     insert_at_end(&head, 8);
     insert_at_end(&head, 5);
@@ -233,6 +235,7 @@ void test_insert_at_end(){
     delete_list(&head);
 }
 void test_insert_at_position(){
+    printf("\033[0;33mTesting Insert at Position...\033[0m\n");
     node *head = initialize_head();
     insert_at_beginning(&head, 5);
     insert_at_beginning(&head, 5);
@@ -243,6 +246,7 @@ void test_insert_at_position(){
     delete_list(&head);
 }
 void test_delete_from_beginning(){
+    printf("\033[0;33mTesting Delete from Beginning...\033[0m\n");
     node *head = initialize_head();
     insert_at_beginning(&head, 2);
     insert_at_beginning(&head, 8);
@@ -252,6 +256,7 @@ void test_delete_from_beginning(){
     delete_list(&head);
 }
 void test_delete_from_end(){
+    printf("\033[0;33mTesting Delete from End...\033[0m\n");
     node *head = initialize_head();
     insert_at_beginning(&head, 2);
     insert_at_beginning(&head, 8);
@@ -261,6 +266,7 @@ void test_delete_from_end(){
     delete_list(&head);
 }
 void test_delete_from_position(){
+    printf("\033[0;33mTesting Delete from Position...\033[0m\n");
     node *head = initialize_head();
     insert_at_beginning(&head, 2);
     insert_at_beginning(&head, 8);
@@ -270,6 +276,7 @@ void test_delete_from_position(){
     delete_list(&head);
 }
 void test_search(){
+    printf("\033[0;33mTesting Search...\033[0m\n");
     node *head = initialize_head();
     insert_at_beginning(&head, 2);
     insert_at_beginning(&head, 8);
@@ -279,6 +286,7 @@ void test_search(){
     delete_list(&head);
 }
 void test_print(){
+    printf("\033[0;33mTesting Print...\033[0m\n");
     node *head = initialize_head();
     insert_at_beginning(&head, 2);
     insert_at_beginning(&head, 8);
